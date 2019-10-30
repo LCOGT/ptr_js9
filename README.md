@@ -1,2 +1,5 @@
 
-Sync with a remote server: https://superuser.com/questions/1316300/how-to-sync-a-local-dir-to-server-using-git
+### ptr_js9
+
+This is a collection of scripts used to initialize and manage a server for JS9 analysis. 
+
