@@ -39,7 +39,6 @@ apt install make -y
 apt install nodejs -y	# server side helper 
 apt install apache2 -y	# web server
 apt install funtools -y	# server side analysis tools
-apt install python3-pip -y
 apt install virtualenv -y
 
 # install certbot (to make ssl certs)
@@ -150,9 +149,6 @@ service apache2 restart
 ###   SSL Certificates    ###
 #############################
 
-SERVER_URL="https://js9.photonranch.org"
-SERVER_NAME="js9.photonranch.org"
-
 # Obtain ssl certificates with the help of certbot
 # Note: certbot should automatically renew certificates before they expire.
 certbot -n --apache --domains $SERVER_NAME --agree-tos --email photonadmin@lco.global
@@ -177,13 +173,13 @@ echo '{
 #############################
 
 # Create a logs folder for the node helper
-mkdir /home/ubuntu/logs
-chown -R ubuntu:ubuntu /home/ubuntu/logs
+mkdir /home/$default_user/logs
+chown -R ubuntu:ubuntu /home/$default_user/logs
 
 # Add the funcnts scripts to the path
 # Add start/reload node helper shortcuts
 cat >> /home/ubuntu/.bashrc <<'EOF'
-PATH=$PATH:/soft/saord/bin:/soft/saord
+PATH=$PATH:/soft/saord/bin
 alias nodeHelperStart="node /var/www/js9/js9Helper.js 1>/home/ubuntu/logs/js9node.log 2>&1 &"
 alias nodeHelperReload="kill -USR2 `ps guwax | egrep js9Helper | egrep -v egrep | awk '{print $2}'`"
 
@@ -192,16 +188,9 @@ if [ -f ~/.bash_aliases ]; then
 fi
 EOF
 source /home/ubuntu/.bashrc
-su - ubuntu -c 'source /home/ubuntu/.bashrc'
+sudo -u $default_user source /home/ubuntu/.bashrc
 
 # Start the node helper as the default (non-root) user
-su - ubuntu -c 'node /var/www/js9/js9Helper.js 1>/home/ubuntu/logs/js9node.log 2>&1 &'
-
-
-#############################
-###   Custom Scripts      ###
-#############################
-
-su - ubuntu -c 'virtualenv -p /usr/bin/python3 /home/ubuntu/scripts/venv'
+sudo -u $default_user nodeHelperStart
 
 
