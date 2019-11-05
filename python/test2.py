@@ -7,4 +7,4 @@ filename = sys.argv[1]
 
 hdu_list = fits.open(filename)
 print(hdu_list.info())
-print(filename)
+#print(filename)

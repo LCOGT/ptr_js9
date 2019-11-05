@@ -1,8 +1,0 @@
-[
-  {"name"   : "test1",
-   "title"  : "My first simple server task.",
-   "files"  : "fits",
-   "action" : "js9Xeq2 test1 $filename",
-   "hidden" : false,
-   "rtype"  : "text"}
-]

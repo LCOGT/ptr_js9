@@ -1,8 +1,0 @@
-[
-  {"name"   : "test4",
-   "title"  : "test4",
-   "files"  : "fits",
-   "action" : "js9Xeq2 test3 $filename",
-   "hidden" : false,
-   "rtype"  : "plot"}
-]

@@ -1,0 +1,110 @@
+#!/bin/bash
+# set -x
+# exec 2>$HOME/foo.log
+
+# make sure we have minimum arg count
+if [ $# -lt 1 ]; then
+    echo "$0 [cmd] [args ...]"
+    exit 1
+fi
+
+# on entry, the following JS9 environment variables will be available:
+# JS9_DIR		top level directory of js9 helper
+# JS9_WORKDIR		working directory, if configured
+# JS9_WORKDIR_QUOTA	quota for working directory, if configured
+# JS9_HOST		host ip of client
+# JS9_ID		id (from js9 div) of client
+
+#defaults
+CHANDRA_BINS="500:8000:1875"
+XMM_BINS="400:15000:1825"
+XRAY_ELEMENTS='{"text": "O VII", "x": 570, "y": "%Y"}, {"text": "O VIII", "x": 650, "y": "%Y"}, {"text": "Ne X", "x": 1020, "y": "%Y"}, {"text": "Mg XI", "x": 1340, "y": "%Y"}, {"text": "Si XIII", "x": 1850, "y": "%Y"}, {"text": "Si XIV", "x": 2010, "y": "%Y"}, {"text": "S XV", "x": 2450, "y": "%Y"}, {"text": "S XVI", "x": 2620, "y": "%Y"}, {"text": "Ar XVII", "x": 3130, "y": "%Y"}, {"text": "Ar XVIII", "x": 3320, "y": "%Y"}, {"text": "Ca XIX", "x": 3890, "y": "%Y"}, {"text": "Ca XX", "x": 4110, "y": "%Y"}, {"text": "Fe XXV", "x": 6670, "y": "%Y"}'
+
+# if we are being called via CGI, send stderr to stdout
+if [ x"$QUERY_STRING" != x ]; then
+  exec 2>&1
+fi
+
+# error handler: send to stderr (which will go to stdout for CGI)
+error() {
+  echo "$*" | egrep "^ERROR:" 1>/dev/null 2>&1
+  if [ $? = 0 ]; then
+    echo "$*" >&2
+  else
+    echo "ERROR: $*" >&2
+  fi
+  exit 1
+}
+
+xsed() {
+  sed 's#'${JS9_DIR:-none}'#${JS9_DIR}#g;'
+}
+
+getpar () {
+  egrep "$1 *=" | awk -F= '{print $2}' | awk -F/ '{print $1}' | sed "s/[' ]*\([^ ']*\)[ ']*/\1/" | tr [a-z] [A-Z] | head -1
+}
+
+quotacheck () {
+  if [ x"${JS9_WORKDIR}" = x ]; then
+    error "task requires configuration of a temporary work directory"
+  fi
+  mb=`du -sk . | awk '{printf("%d", ($1 + 500) / 1000)}'`
+  if [ ${JS9_WORKDIR_QUOTA:-0} -gt 0 ]; then
+    if [ ${mb:-0} -ge ${JS9_WORKDIR_QUOTA} ]; then
+      error "disk quota exceeded. Please close a displayed image or remove a proxy file (see File menu)."
+    fi
+  fi
+}
+
+# sanity check that we have system programs in the path
+hash awk sed egrep du mv rm cat echo 1>/dev/null 2>&1
+if [ $? != 0 ]; then
+      error "can't find system programs (e.g. awk, sed). Please check the PATH of the JS9 helper."
+fi
+
+# regcnts is preferred
+hash regcnts 1>/dev/null 2>&1
+if [ $? = 0 ]; then
+  CNTS=regcnts
+else
+  hash funcnts 1>/dev/null 2>&1
+  if [ $? = 0 ]; then
+    CNTS=funcnts
+  else
+    CNTS="error requires regcnts or funcnts ..."
+  fi
+fi
+
+# process standard arguments
+CMD="$1";     shift;
+case $CMD in
+
+test1)
+    # required args
+    if [ "$#" -lt 1 ]; then
+	error "test1 file"
+    fi
+    IFILE="$1"
+    echo "$IFILE from test1"
+    ;;
+test2)
+    cd /home/ubuntu/scripts
+    source venv/bin/activate
+    python test2.py "$1" | xsed
+    exit 0
+    ;;
+test3)
+    source /home/ubuntu/scripts/venv/bin/activate
+    echo $(python /home/ubuntu/scripts/test3.py "$1" | xsed)
+    exit 0
+    ;;
+update)
+    sudo bash /home/ubuntu/ptr_js9/scripts/update_plugins.sh 
+    echo "backend update complete"
+    exit 0
+    ;;
+    
+*)
+    error "unknown function: $CMD"
+    ;;
+esac
