@@ -98,6 +98,11 @@ test3)
     echo $(python /home/ubuntu/scripts/test3.py "$1" | xsed)
     exit 0
     ;;
+update)
+    bash /home/ubuntu/ptr_js9/scripts/update_plugins.sh 
+    echo "backend update complete"
+    exit 0
+    ;;
     
 counts)
     if [ $# -eq 1 ]; then

@@ -59,31 +59,6 @@ git clone https://github.com/ericmandel/js9data
 git clone https://github.com/healpy/cfitsio
 
 
-#############################
-###  Update Record Sets   ###
-#############################
-
-aws route53 change-resource-record-sets \
-    --hosted-zone-id $HOSTED_ZONE_ID \
-    --change-batch '{
-	"Comment": "Changing js9.photonranch.org to point this ec2 instance.", 
-	"Changes": [
-	  {
-	    "Action": "UPSERT",
-	    "ResourceRecordSet": {
-	      "Name": "js9.photonranch.org",
-	      "Type": "A",
-	      "TTL": 300,
-	      "ResourceRecords": [
-		{
-		  "Value": "'$PUBLIC_IPV4'"
-		}
-	      ]
-	    }
-	  }
-	]
-      }'
-
 
 #############################
 ###      Install JS9      ###
@@ -159,6 +134,32 @@ make clean
 
 # Move the index.html up one level (so the DocumentRoot serves the index page)
 mv /var/www/js9/index.html /var/www
+
+
+#############################
+###  Update Record Sets   ###
+#############################
+
+aws route53 change-resource-record-sets \
+    --hosted-zone-id $HOSTED_ZONE_ID \
+    --change-batch '{
+	"Comment": "Changing js9.photonranch.org to point this ec2 instance.", 
+	"Changes": [
+	  {
+	    "Action": "UPSERT",
+	    "ResourceRecordSet": {
+	      "Name": "js9.photonranch.org",
+	      "Type": "A",
+	      "TTL": 300,
+	      "ResourceRecords": [
+		{
+		  "Value": "'$PUBLIC_IPV4'"
+		}
+	      ]
+	    }
+	  }
+	]
+      }'
 
 
 #############################
