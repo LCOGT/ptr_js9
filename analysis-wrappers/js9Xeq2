@@ -99,7 +99,7 @@ test3)
     exit 0
     ;;
 update)
-    bash /home/ubuntu/ptr_js9/scripts/update_plugins.sh 
+    sudo bash /home/ubuntu/ptr_js9/scripts/update_plugins.sh 
     echo "backend update complete"
     exit 0
     ;;
