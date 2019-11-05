@@ -22,6 +22,8 @@
 # IP address with format x.x.x.x
 PUBLIC_IPV4="$(curl http://169.254.169.254/latest/meta-data/public-ipv4)"
 
+HOSTED_ZONE_ID="ZREMYMWMI0QBT"
+
 SERVER_URL="https://js9.photonranch.org"
 SERVER_NAME="js9.photonranch.org"
 
@@ -29,7 +31,7 @@ default_user="ubuntu"
 
 
 #############################
-### Download and Install  ###
+### Download Dependencies ###
 #############################
 
 # install required depenencies
@@ -41,6 +43,7 @@ apt install apache2 -y	# web server
 apt install funtools -y	# server side analysis tools
 apt install python3-pip -y
 apt install virtualenv -y
+apt install awscli -y
 
 # install certbot (to make ssl certs)
 apt-get install software-properties-common -y
@@ -54,6 +57,37 @@ cd /home/ubuntu/
 git clone https://github.com/ericmandel/js9
 git clone https://github.com/ericmandel/js9data
 git clone https://github.com/healpy/cfitsio
+
+
+#############################
+###  Update Record Sets   ###
+#############################
+
+aws route53 change-resource-record-sets \
+    --hosted-zone-id $HOSTED_ZONE_ID \
+    --change-batch '{
+	"Comment": "Changing js9.photonranch.org to point this ec2 instance.", 
+	"Changes": [
+	  {
+	    "Action": "UPSERT",
+	    "ResourceRecordSet": {
+	      "Name": "js9.photonranch.org",
+	      "Type": "A",
+	      "TTL": 300,
+	      "ResourceRecords": [
+		{
+		  "Value": "'$PUBLIC_IPV4'"
+		}
+	      ]
+	    }
+	  }
+	]
+      }'
+
+
+#############################
+###      Install JS9      ###
+#############################
 
 # Create js9 install directory and change ownership to self
 mkdir /var/www/js9
