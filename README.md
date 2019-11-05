@@ -31,3 +31,7 @@ The `analysis-wrappers` directory contain scripts reponsible for making sure all
 - The script `ptr-scripts`, heavily based on the design of js9Xeq, is used for our custom scripts.
 
 More details and directions on modifying the analysis-wrappers and analysis-plugins can be found here: https://js9.photonranch.org/js9/help/serverside.html
+
+### Push Changes to the Server
+
+The `scripts` directory contains `update_plugins.sh` which is used to update the js9 server to use the latest scripts in this repository. To run the script, open an instance of JS9, enable server-side tasks by uploading the current image, and then select the task 'Pull the latest server scripts'. Once finished, reload js9 and the new tasks will be available.
