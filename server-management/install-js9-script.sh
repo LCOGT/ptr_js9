@@ -57,7 +57,6 @@ apt-get install certbot python-certbot-apache -y
 cd /home/ubuntu/
 git clone https://github.com/ericmandel/js9
 git clone https://github.com/ericmandel/js9data
-git clone https://github.com/lcogt/ptr_js9
 git clone https://github.com/healpy/cfitsio
 
 
