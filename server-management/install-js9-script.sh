@@ -14,6 +14,8 @@
 # -> create record set -> create with name=js9, type=A(IPv4 address), alias=no, 
 # and value=x.x.x.x (the instance's public IPv4 address)
 
+# Regular ownership of ptr_js9 directory
+chown -R ubuntu:ubuntu /home/ubuntu/ptr_js9
 
 #############################
 ###    Variables          ###
