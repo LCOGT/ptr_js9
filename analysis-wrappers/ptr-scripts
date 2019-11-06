@@ -79,7 +79,7 @@ fi
 CMD="$1";     shift;
 case $CMD in
 
-test1)
+script0)
     # required args
     if [ "$#" -lt 1 ]; then
 	error "test1 file"
@@ -87,28 +87,32 @@ test1)
     IFILE="$1"
     echo "$IFILE from test1"
     ;;
-test2)
-    cd /home/ubuntu/scripts
+script1)
+    cd /home/ubuntu/ptr_js9/python-scripts
     source venv/bin/activate
-    python test2.py "$1" | xsed
+    python script1.py "$1" | xsed
     exit 0
     ;;
-test3)
+script2)
     source /home/ubuntu/scripts/venv/bin/activate
-    echo $(python /home/ubuntu/scripts/test3.py "$1" | xsed)
+    echo $(python /home/ubuntu/ptr_js9/python-scripts/script2.py "$1" | xsed)
     exit 0
     ;;
 loadS3)
     URL=`echo $1 | sed 's/__ampersand__/\&/g'`
     OFILE=`basename "$URL"`
+    echo "url: $URL" >> log.txt
+    echo "ofile: $OFILE" >> log.txt
     aws s3 cp s3://photonranch-001/wmd/raw_data/2019/$URL . 
+    echo "ls: `ls`" >> log.txt
     bzip2 -d $URL
     FILE=`echo $OFILE | sed 's/fits.bz2/fits/g'`
+    echo "file: $FILE" >> log.txt
     echo "${JS9_WORKDIR}/$FILE"
     exit 0
     ;;
 update)
-    sudo bash /home/ubuntu/ptr_js9/scripts/update_plugins.sh 
+    sudo bash /home/ubuntu/ptr_js9/server-mnagement/update-scripts.sh 
     echo "backend update complete"
     exit 0
     ;;

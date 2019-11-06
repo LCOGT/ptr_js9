@@ -44,6 +44,7 @@ apt install funtools -y	# server side analysis tools
 apt install python3-pip -y
 apt install virtualenv -y
 apt install awscli -y
+apt install tree -y
 
 # install certbot (to make ssl certs)
 apt-get install software-properties-common -y
@@ -56,6 +57,7 @@ apt-get install certbot python-certbot-apache -y
 cd /home/ubuntu/
 git clone https://github.com/ericmandel/js9
 git clone https://github.com/ericmandel/js9data
+git clone https://github.com/lcogt/ptr_js9
 git clone https://github.com/healpy/cfitsio
 
 
@@ -96,8 +98,8 @@ echo 'var JS9Prefs = {
 		 "workDir":	     "./tmp",
 		 "workDirQuota":     1000,
 		 "dataPath":	     "$HOME/Desktop:$HOME/data",
-		 "analysisPlugins":  "./analysis-plugins",
-		 "analysisWrappers": "./analysis-wrappers"},
+		 "analysisPlugins":  "/home/ubuntu/ptr_js9/analysis-plugins",
+		 "analysisWrappers": "/home/ubuntu/ptr_js9/analysis-wrappers"},
   "imageOpts":  {"colormap":	     "grey",
   		 "scale":     	     "log"}
 }' > /home/ubuntu/js9/js9prefs.js
@@ -114,8 +116,8 @@ echo '{
 		 "workDir":	     "./tmp",
 		 "workDirQuota":     1000,
 		 "dataPath":	     "$HOME/Desktop:$HOME/data",
-		 "analysisPlugins":  "./analysis-plugins",
-		 "analysisWrappers": "./analysis-wrappers"},
+		 "analysisPlugins":  "/home/ubuntu/ptr_js9/analysis-plugins",
+		 "analysisWrappers": "/home/ubuntu/ptr_js9/analysis-wrappers"},
   "imageOpts":  {"colormap":	     "grey",
   		 "scale":     	     "log"}
 }' > /home/ubuntu/js9/js9Prefs.json
@@ -237,6 +239,9 @@ su - ubuntu -c 'node /var/www/js9/js9Helper.js 1>/home/ubuntu/logs/js9node.log 2
 ###   Custom Scripts      ###
 #############################
 
-su - ubuntu -c 'virtualenv -p /usr/bin/python3 /home/ubuntu/scripts/venv'
+# Make the virtual environment to run custom python scripts
+su - ubuntu -c 'virtualenv -p /usr/bin/python3 /home/ubuntu/ptr_js9/python-scripts/venv'
+# Activate the virtual environment and pip install dependencies. 
+su - ubuntu -c 'source /home/ubuntu/ptr_js9/python-scripts/venv/bin/activate && pip3 install -r /home/ubuntu/ptr_js9/python-scripts/requirements.txt'
 
 

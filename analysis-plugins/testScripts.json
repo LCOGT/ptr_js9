@@ -1,29 +1,23 @@
 [
-  {"name"   : "test1",
-   "title"  : "ptr: Simple Task 1",
+  {"name"   : "script0",
+   "title"  : "ptr: dummy task",
    "files"  : "fits",
-   "action" : "ptr-scripts test1 $filename",
+   "action" : "ptr-scripts script0 $filename",
    "hidden" : false,
    "rtype"  : "text"},
 
-  {"name"   : "test2",
+  {"name"   : "script1",
    "title"  : "ptr: Show HDU Info",
    "files"  : "fits",
-   "action" : "ptr-scripts test2 $filename",
+   "action" : "ptr-scripts script1 $filename",
    "hidden" : false,
    "rtype"  : "text"},
 
-  {"name"   : "test3",
+  {"name"   : "script2",
    "title"  : "ptr: X Profile",
    "files"  : "fits",
-   "action" : "ptr-scripts test3 $filename",
-   "hidden" : false,
-   "rtype"  : "plot"},
-
-  {"name"   : "test4",
-   "title"  : "ptr: test4",
-   "files"  : "fits",
-   "action" : "ptr-scripts test3 $filename",
+   "action" : "ptr-scripts script2 $filename",
    "hidden" : false,
    "rtype"  : "plot"}
+
 ]
