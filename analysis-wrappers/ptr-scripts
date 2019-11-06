@@ -102,7 +102,7 @@ loadS3)
     URL=`echo $1 | sed 's/__ampersand__/\&/g'`
     OFILE=`basename "$URL"`
     aws s3 cp s3://photonranch-001/wmd/raw_data/2019/$URL . 
-    bzip2 -d $OFILE
+    bzip2 -d $URL
     FILE=`echo $OFILE | sed 's/fits.bz2/fits/g'`
     echo "${JS9_WORKDIR}/$FILE"
     exit 0
