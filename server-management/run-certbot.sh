@@ -13,7 +13,7 @@ certbot -n --apache --domains $SERVER_NAME --agree-tos --email photonadmin@lco.g
 # Copy ssl certificates and grant $default_user access (so we don't need to mess with  
 # the original certificate permissions).  
 ssl_dir=/var/www/js9/ssl_copies 
-mkdir $ssl_dir 
+mkdir -p $ssl_dir 
 cp /etc/letsencrypt/live/$SERVER_NAME/fullchain.pem /var/www/js9/ssl_copies/ 
 cp /etc/letsencrypt/live/$SERVER_NAME/privkey.pem /var/www/js9/ssl_copies/ 
 chown $default_user "$ssl_dir"/*.pem 
