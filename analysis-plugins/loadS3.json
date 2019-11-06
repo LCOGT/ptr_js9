@@ -1,0 +1,20 @@
+[
+  {"name"   : "loadS3",
+   "title"  : "Open a Link via Server Proxy",
+   "files"  : "*",
+   "purl"   : "./params/loadproxy.html",
+   "action" : "ptr-scripts loadS3 $url",
+   "workDir": true,
+   "hidden" : false,
+   "rtype"  : "fits"
+  },
+  {"name"   : "removeproxy",
+   "title"  : "Remove a File from the Proxy Server",
+   "files"  : "*",
+   "action" : "js9Xeq removeproxy $proxyfile",
+   "workDir": true,
+   "hidden" : true,
+   "rtype"  : "fits"
+  }
+]
+

@@ -1,7 +1,7 @@
 [
   {"name"   : "update",
    "title"  : "Pull the latest server scripts",
-   "files"  : "fits",
+   "files"  : "*",
    "action" : "ptr-scripts update",
    "hidden" : false,
    "rtype"  : "text"}
