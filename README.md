@@ -11,7 +11,7 @@ Create an ec2 instance running Ubuntu Server 18.04 LTS (HVM). Ensure the instanc
 #!/bin/bash
 cd /home/ubuntu
 git clone https://github.com/lcogt/ptr_js9
-bash /home/ubuntu/ptr_js9/scripts/install-js9-script.sh
+bash /home/ubuntu/ptr_js9/server-management/install-js9-script.sh
 ```
 
 Note: these startup scripts are configured to set up SSL certificates using a domain setup with aws Route53. You'll have to change `install-js9-script.sh` to work with in environments outside of photon ranch.
