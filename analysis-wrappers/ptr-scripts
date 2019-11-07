@@ -82,10 +82,13 @@ CMD="$1";     shift;
 case $CMD in
 
 example-text)
-    echo "example text output"
+    # Return a short message and datestamp using python. 
+    source $PYTHON_SCRIPTS/venv/bin/activate
+    echo $(python $PYTHON_SCRIPTS/example-text.py | xsed) 
     exit 0
     ;;
 example-plot)
+    # Make a simple plot of 20 random numbers.
     source $PYTHON_SCRIPTS/venv/bin/activate
     echo $(python $PYTHON_SCRIPTS/example-plot.py | xsed)
     exit 0
