@@ -15,6 +15,8 @@ fi
 # JS9_HOST		host ip of client
 # JS9_ID		id (from js9 div) of client
 
+PYTHON_SCRIPTS='/home/ubuntu/ptr_js9/python-scripts'
+
 #defaults
 CHANDRA_BINS="500:8000:1875"
 XMM_BINS="400:15000:1825"
@@ -88,14 +90,13 @@ script0)
     echo "$IFILE from test1"
     ;;
 script1)
-    cd /home/ubuntu/ptr_js9/python-scripts
-    source venv/bin/activate
-    python script1.py "$1" | xsed
+    source $PYTHON_SCRIPTS/venv/bin/activate
+    echo $(python $PYTHON_SCRIPTS/script1.py "$1" | xsed)
     exit 0
     ;;
 script2)
-    source /home/ubuntu/ptr_js9/python-scripts/venv/bin/activate
-    echo $(python /home/ubuntu/ptr_js9/python-scripts/script2.py "$1" | xsed)
+    source $PYTHON_SCRIPTS/venv/bin/activate
+    echo $(python $PYTHON_SCRIPTS/script2.py "$1" | xsed)
     exit 0
     ;;
 loadS3)
