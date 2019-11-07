@@ -86,7 +86,8 @@ example-text)
     exit 0
     ;;
 example-plot)
-    echo "example plot output"
+    source $PYTHON_SCRIPTS/venv/bin/activate
+    echo $(python $PYTHON_SCRIPTS/example-plot.py | xsed)
     exit 0
     ;;
 example-fits)

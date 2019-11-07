@@ -2,7 +2,7 @@
   {"name"   : "ex-text",
    "title"  : "example:text",
    "files"  : "*",
-   "action" : "example-text",
+   "action" : "ptr-scripts example-text",
    "hidden" : false,
    "rtype"  : "text"},
 
