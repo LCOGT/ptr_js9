@@ -7,13 +7,9 @@ git pull
 su - ubuntu -c "kill -USR2 `ps guwax | egrep js9Helper | egrep -v egrep | awk '{print $2}'`"
 
 # Update python requirements in our virtual environment
-update_python=$(cat << END
-update_python='source /home/ubuntu/ptr_js9/python-scripts/venv/bin/activate
+su -ubuntu -c "source /home/ubuntu/ptr_js9/python-scripts/venv/bin/activate 
 pip3 install -r /home/ubuntu/ptr_js9/python-scripts/requirements.txt
-deactivate
-END
-)
-su - ubuntu -c $update_python
+deactivate"
 
 #### OLD
 
