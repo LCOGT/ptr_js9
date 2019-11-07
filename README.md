@@ -1,9 +1,8 @@
-
-## JS9 Server for Photon Ranch
+# JS9 Server for Photon Ranch
 
 This is a collection of scripts used to initialize and manage a server for JS9 analysis.
 
-### Initialization
+## Initialization
 
 Create an ec2 instance running Ubuntu Server 18.04 LTS (HVM). Ensure the instance includes an IAM role with the ability to change resource record sets in route53. Include the following script as userdata:
 
@@ -16,7 +15,7 @@ bash /home/ubuntu/ptr_js9/server-management/install-js9-script.sh
 
 Note: these startup scripts are configured to set up SSL certificates using a domain setup with aws Route53. You'll have to change `install-js9-script.sh` to work with in environments outside of photon ranch.
 
-### How it works
+## How it works
 
 The `server-management` directory contains stuff used to initialize and update the server with the latest code. No need to change it. 
 
@@ -31,6 +30,6 @@ The `analysis-wrappers` directory contain scripts reponsible for making sure all
 
 More details and directions on modifying the analysis-wrappers and analysis-plugins can be found here: https://js9.photonranch.org/js9/help/serverside.html
 
-### Push Changes to the Server
+## Push Changes to the Server
 
 The `server-management` directory contains `update-scripts.sh` which is used to update the js9 server to use the latest scripts in this repository. To run the script, open an instance of JS9, enable server-side tasks by uploading the current image, and then select the task 'Pull the latest server scripts'. Once finished, reload js9 and the new tasks will be available.

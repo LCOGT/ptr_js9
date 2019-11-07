@@ -81,6 +81,39 @@ fi
 CMD="$1";     shift;
 case $CMD in
 
+example-text)
+    echo "example text output"
+    exit 0
+    ;;
+example-plot)
+    echo "example plot output"
+    exit 0
+    ;;
+example-fits)
+    echo "example fits output"
+    exit 0
+    ;;
+example-png)
+    echo "example png output"
+    exit 0
+    ;;
+example-regions)
+    echo "example regions output"
+    exit 0
+    ;;
+example-catalog)
+    echo "example catalog output"
+    exit 0
+    ;;
+example-alert)
+    echo "example alert output"
+    exit 0
+    ;;
+example-none)
+    echo "example none output"
+    exit 0
+    ;;
+
 script0)
     # required args
     if [ "$#" -lt 1 ]; then
@@ -88,6 +121,7 @@ script0)
     fi
     IFILE="$1"
     echo "$IFILE from test1"
+    exit 0
     ;;
 script1)
     source $PYTHON_SCRIPTS/venv/bin/activate
