@@ -94,7 +94,7 @@ script1)
     exit 0
     ;;
 script2)
-    source /home/ubuntu/scripts/venv/bin/activate
+    source /home/ubuntu/ptr_js9/python-scripts/venv/bin/activate
     echo $(python /home/ubuntu/ptr_js9/python-scripts/script2.py "$1" | xsed)
     exit 0
     ;;
