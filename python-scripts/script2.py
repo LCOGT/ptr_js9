@@ -13,7 +13,7 @@ for ind, col in enumerate(data):
 
 result = {
     #"color": "red",
-    "label": "column sum vs. column",
+    "label": "column avg vs. column",
     "data": colavg,
 }
 print(json.dumps(result))
