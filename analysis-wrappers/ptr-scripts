@@ -113,8 +113,12 @@ loadS3)
     exit 0
     ;;
 update)
-    sudo bash /home/ubuntu/ptr_js9/server-management/update-scripts.sh 
-    echo "backend update complete"
+    update=`sudo bash /home/ubuntu/ptr_js9/server-management/update-scripts.sh`
+    if [ $? != 0 ]; then
+  error "$update"
+    else
+        echo "backend update complete"
+    fi
     exit 0
     ;;
     
