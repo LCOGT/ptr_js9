@@ -4,19 +4,11 @@
    "files"  : "fits",
    "action" : "js9Xeq counts $filename $sregions $bregions",
    "rtype"  : "text"},
-
   {"name"   : "radialprofile",
    "title"  : "Radial Profile",
    "files"  : "fits",
    "action" : "js9Xeq radialplot $filename $sregions $bregions",
    "rtype"  : "plot"},
-   
-  {"name"   : "radialprofile2",
-   "title"  : "Radial Profile2",
-   "files"  : "fits",
-   "action" : "js9Xeq2 radialplot $filename $sregions $bregions",
-   "rtype"  : "plot"},
-
   {"name"   : "energyplot",
    "title"  : "Energy Spectrum",
    "files"  : "fits",
