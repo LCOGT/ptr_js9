@@ -17,11 +17,11 @@ Note: these startup scripts are configured to set up SSL certificates using a do
 
 ## How it works
 
-The `server-management` directory contains stuff used to initialize and update the server with the latest code. No need to change it. 
+The `server-management` directory contains stuff used to initialize and update the server with the latest code. No need to change it.
 
 The `python-scripts` directory contains the actual analysis scripts. They will be called by a bash script, with command line arguments if desired. Make sure the requirements are defined in `requirements.txt`. Note that the actual server task does not need to be written in python, or defined in this directory; as long as it can be called from a bash script (defined in analysis-wrappers and analysis-plugins), it can work.
 
-The `analysis-plugins` directory contains a json file defining/describing each analysis task. A task must be defined here in order to properly communicate with the browser instance. 
+The `analysis-plugins` directory contains a json file defining/describing each analysis task. A task must be defined here in order to properly communicate with the browser instance.
 
 The `analysis-wrappers` directory contain scripts reponsible for making sure all the steps involved with the analysis task actually happen. This includes safe argument handling, calling the right scripts, and returning the output or appropriate error message.
 
@@ -38,6 +38,9 @@ ____
 
 ## Example - Creating a Python Analysis Script
 
+*The js9 documentation for analysis plugins is worth reading if you want to write your own scripts.
+https://js9.photonranch.org/js9/help/serverside.html*
+
 ### 1. Create the json definition
 
 The JS9 server recognizes tasks that are defined in the `analysis-plugins` directory. To add a new analysis task, create a new file in `analysis-plugins` as a .json file.
@@ -53,6 +56,7 @@ The values that can be defined are described as follows:
 - hidden: if true, the analysis task is not shown in the Analysis menu
 
 Let's make a file called `echoFilename.json`:
+
 ```json
 [
   {"name"   : "echo-filename",
@@ -63,8 +67,6 @@ Let's make a file called `echoFilename.json`:
    "rtype"  : "text"}
 ]
 ```
-
-The js9 [documentation](https://js9.photonranch.org/js9/help/serverside.html) on these json definition files is worth reading if you want to write your own scripts.
 
 ### 2. Define a corresponding bash command
 
@@ -99,9 +101,9 @@ print(filename) # Recall that the browser will get anything from stdout.
 sys.exit(0)
 ```
 
-### 4. Standard git procedure...
+### 4. Standard git procedure
 
-Changes should now include: 
+Changes should now include:
 
 - `analysis-plugins/echoFilename.json` # New file: definition
 - `analysis-wrappers/ptr-scripts` # Modified file: include our new command
@@ -109,11 +111,12 @@ Changes should now include:
 - `python-scripts/requirements.txt` # Modified file (optional): include dependencies
 
 Run the following to push the changes:
-```bash
-# Sync with the master and fix merge conflicts if any appear
-git pull
 
-# Add all the files we want to include
+```bash
+# Sync with the master
+git pull # also fix any merge conflicts if they appear
+
+# Include all the files that have been modified in the repository
 git add .
 
 # Commit and describe the changes
@@ -123,5 +126,14 @@ git commit -m 'Add new script: echo_filename'
 git push -u origin master
 ```
 
+Or, submit a pull request (preferred for team use).
+
 ### 5. Refresh the server to show the new script
 
+The temporary hack to refreshing the server:
+
+1. Open js9 in the browser (in the photonranch ui for example).
+2. With a fits file loaded, click menu item Analysis --> Upload FITS file to make tasks available.
+3. Next run the server side task by clicking the menu item Analysis --> Pull the latest server scripts
+4. Repeat step #3 again. After the second time, a window should pop up with a success message. If not, there is probably an error with the changes.
+5. Reload the page. The new scripts should be ready to use.
