@@ -28,7 +28,7 @@ The `analysis-wrappers` directory contain scripts reponsible for making sure all
 - The script `js9Xeq` came with the js9 installation and handles the prebuilt server scripts.
 - The script `ptr-scripts`, heavily based on the design of js9Xeq, is used for our custom scripts.
 
-More details and directions on modifying the analysis-wrappers and analysis-plugins can be found here: https://js9.photonranch.org/js9/help/serverside.html
+More details and directions on modifying the analysis-wrappers and analysis-plugins can be found here: <https://js9.photonranch.org/js9/help/serverside.html>
 
 ## Push Changes to the Server
 
@@ -38,8 +38,7 @@ ____
 
 ## Example - Creating a Python Analysis Script
 
-*The js9 documentation for analysis plugins is worth reading if you want to write your own scripts.
-https://js9.photonranch.org/js9/help/serverside.html*
+*The js9 documentation for analysis plugins is worth reading if you want to write your own scripts. <https://js9.photonranch.org/js9/help/serverside.html>*
 
 ### 1. Create the json definition
 
