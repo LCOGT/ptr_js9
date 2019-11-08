@@ -33,3 +33,95 @@ More details and directions on modifying the analysis-wrappers and analysis-plug
 ## Push Changes to the Server
 
 The `server-management` directory contains `update-scripts.sh` which is used to update the js9 server to use the latest scripts in this repository. To run the script, open an instance of JS9, enable server-side tasks by uploading the current image, and then select the task 'Pull the latest server scripts'. Once finished, reload js9 and the new tasks will be available.
+
+____
+
+## Example - Creating a Python Analysis Script
+
+### 1. Create the json definition
+
+The JS9 server recognizes tasks that are defined in the `analysis-plugins` directory. To add a new analysis task, create a new file in `analysis-plugins` as a .json file.
+
+The values that can be defined are described as follows:
+
+- name: a short identifier string (typically one word)
+- title: a longer string that will be displayed in the Analysis menu
+- files: a rule that will be matched against to determine whether this task is available for the current image
+- purl: a URL pointing to a web page containing a user parameter form
+- action: the command to execute on the server side
+- rtype: a return type, which can be text, plot, fits, png, regions, catalog, alert, or none
+- hidden: if true, the analysis task is not shown in the Analysis menu
+
+Let's make a file called `echoFilename.json`:
+```json
+[
+  {"name"   : "echo-filename",
+   "title"  : "Echo the filename",
+   "files"  : "fits",
+   "action" : "ptr-scripts echo-filename $filename",
+   "hidden" : false,
+   "rtype"  : "text"}
+]
+```
+
+The js9 [documentation](https://js9.photonranch.org/js9/help/serverside.html) on these json definition files is worth reading if you want to write your own scripts.
+
+### 2. Define a corresponding bash command
+
+For security, reasons, the "action" string defined in the json document is never executed directly. The first argument is the wrapper script in the `analysis-wrappers` directory. For now, all photon ranch scrips are run from `ptr-scripts`. The second argument of "action" is the command id which selects the specific case to run within `ptr-scripts`.
+
+In our case, we will add the following case to `ptr-scripts` (nested under the `case` around line 82):
+
+```bash
+echo-filename)
+    # Activate our python virtual environment in our python scripts directory
+    source $PYTHON_SCRIPTS/venv/bin/activate
+    # Run the python script we've defined, and sanitize the output path with xsed (defined earlier in the script)
+    # Arguments for the script are passed in as command line arguments. In our case, $1 represents the $filename defined in the "action" string of the json definition.
+    # Note: stdout will be returned to the browser.
+    echo $(python $PYTHON_SCRIPTS/echo_filename.py $1 | xsed)
+    exit 0
+    ;;
+```
+
+Refer to `analysis-wrappers/js9Xeq` to reference examples that were included with JS9.
+
+### 3. Write the python script we want to execute
+
+Python scripts should be defined in the `python-scripts` directory. Make sure to add any dependencies to `requirements.txt`.
+
+Arguments (like the filename of the file we want) are provided as command-line arguments. Here is an example program named echo_filename.py:
+
+```python
+import sys
+filename = sys.argv[1] # Get the first command-line argument
+print(filename) # Recall that the browser will get anything from stdout.
+sys.exit(0)
+```
+
+### 4. Standard git procedure...
+
+Changes should now include: 
+
+- `analysis-plugins/echoFilename.json` # New file: definition
+- `analysis-wrappers/ptr-scripts` # Modified file: include our new command
+- `python-scripts/echo_filename.py` # New file: The core script
+- `python-scripts/requirements.txt` # Modified file (optional): include dependencies
+
+Run the following to push the changes:
+```bash
+# Sync with the master and fix merge conflicts if any appear
+git pull
+
+# Add all the files we want to include
+git add .
+
+# Commit and describe the changes
+git commit -m 'Add new script: echo_filename'
+
+# Send them up to github
+git push -u origin master
+```
+
+### 5. Refresh the server to show the new script
+
