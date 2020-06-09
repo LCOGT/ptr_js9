@@ -3,7 +3,7 @@ import sys, json, random
 data_to_plot = []
 
 for column in range(20):
-    value = random.randint(0,10)
+    value = random.randint(0,5)
     data_to_plot.append([column,value])
 
 properly_formatted_output = json.dumps({
