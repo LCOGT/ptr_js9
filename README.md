@@ -1,3 +1,9 @@
+*todo:* 
+
+*Certbot automatically renews certificates before they expire (every 3 months). But the certificates need to be copied elsewhere for the js9 node helper to use them; otherwise, backend analysis won't work.* 
+*Make a script to run after a successful certificate renewal that copies the certs from /etc/letsencrypt/live/js9.photonranch.org to /var/www/js9/ssl_copies. 
+For details, see https://certbot.eff.org/docs/using.html#renewing-certificates*
+
 # JS9 Server for Photon Ranch
 
 This is a collection of scripts used to initialize and manage a server for JS9 analysis.
