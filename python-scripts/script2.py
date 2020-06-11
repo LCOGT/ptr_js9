@@ -8,7 +8,7 @@ filename = sys.argv[1]
 
 data = fits.getdata(filename)
 colavg = []
-for ind, col in enumerate(data):
+for ind, col in enumerate(np.transpose(data)):
     colavg.append([ind, int(np.sum(col))/len(col)])
 
 result = {
