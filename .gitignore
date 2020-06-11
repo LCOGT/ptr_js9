@@ -1,0 +1,5 @@
+# python virtual environment
+venv/
+
+# a space for local testing
+sandbox/
