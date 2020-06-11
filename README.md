@@ -140,5 +140,4 @@ The temporary hack to refreshing the server:
 1. Open js9 in the browser (in the photonranch ui for example).
 2. With a fits file loaded, click menu item Analysis --> Upload FITS file to make tasks available.
 3. Next run the server side task by clicking the menu item Analysis --> Pull the latest server scripts
-4. Repeat step #3 again. After the second time, a window should pop up with a success message. If not, there is probably an error with the changes.
-5. Reload the page. The new scripts should be ready to use.
+4. The new scripts should be ready to use.
