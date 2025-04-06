@@ -1,3 +1,5 @@
+# Note: this has been archived as it is no longer used by Photon Ranch
+
 *todo:* 
 
 *Certbot automatically renews certificates before they expire (every 3 months). But the certificates need to be copied elsewhere for the js9 node helper to use them; otherwise, backend analysis won't work.* 
